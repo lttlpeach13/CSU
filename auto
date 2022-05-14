@@ -1,0 +1,68 @@
+class Automobile:   
+    
+    def __init__(self):
+        self._make = ''
+        self._model = ''
+        self._color = ''
+        self._year = 0
+        self._mileage = 0    
+    
+    def add_vehicle(self):     
+        self._make = input("Enter make: ")
+        self._model = input("Enter model: ")
+        self._color = input("Enter color: ")
+        self._year = int(input("Enter year: "))
+        self._mileage = int(input("Enter mileage: "))
+
+    def __str__(self):
+        return(self._make, self._model, self._color, self._year, self._mileage)
+
+inventory = []
+car = Automobile()
+
+menu = ('(1) Add a vehicle.\n'
+    '(2) View inventory.\n'
+    '(3) Update a vehicle.\n'
+    '(4) Delete a vehicle.\n'
+    '(5) Export inventory\n'
+    '(6) Exit.\n')
+
+print('Enter command from the menu: ')
+user_input = input(menu).strip().lower()
+
+while user_input != '6':
+
+    if user_input == '1':  # add vehicle
+        car = Automobile()
+        car.add_vehicle()
+        inventory.append(car.__str__())
+        print(car.__str__())
+        
+    elif user_input == '2':  # print inventory to console
+        print(inventory)
+
+    elif user_input == '3':  # update vehicle
+        veh_num = int(input('Select vehicle number: '))
+        veh_num -= 1
+        print('Current vehicle details:', inventory[veh_num])
+        print('Provide updated vehicle information:\n')
+        car.add_vehicle()
+        inventory[veh_num] = car.__str__()
+        print('New vehicle details:', inventory[veh_num])
+
+    elif user_input == '4':  # delete vehicle
+        veh_num = int(input('Select vehicle number: '))
+        veh_num -= 1
+        inventory.pop(veh_num)
+        print('Vehicle deleted. Updated inventory: ')
+        print(inventory)
+
+    elif user_input == '5':  # export inventory to text file
+        txt_file = open('inventory.txt', 'w+')
+        txt_file.write(str(inventory))
+        txt_file.close()
+
+    else:
+        print('Invalid command')
+
+    user_input = input('Enter command: ').strip().lower()
